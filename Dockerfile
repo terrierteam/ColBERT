@@ -17,7 +17,7 @@ COPY conda_environment.txt /tmp/
 
 RUN conda config --add channels conda-forge \
  && conda config --add channels pytorch \
- && conda install python=3.6.0 \
+# && conda install python=3.6.0 \
  && conda update conda \
  && conda env create --name pythonColbert -f /tmp/conda_environment.txt
 # && conda update -n base -c defaults conda

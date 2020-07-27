@@ -62,6 +62,7 @@ RUN  echo "deb http://archive.ubuntu.com/ubuntu bionic multiverse" >>  /etc/apt/
  && echo "deb http://archive.ubuntu.com/ubuntu bionic universe" >>  /etc/apt/sources.list \
  && echo "deb http://archive.ubuntu.com/ubuntu bionic-security universe" >>  /etc/apt/sources.list \
  && echo "deb http://archive.ubuntu.com/ubuntu bionic-updates universe" >>  /etc/apt/sources.list \
+ && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3B4FE6ACC0B21F32 \
  && apt update
 
 RUN APT_INSTALL="apt-get install -y --no-install-recommends" \

@@ -34,7 +34,7 @@ setuptools=46.4.0=py36_0
 six=1.15.0
 sqlite=3.31.1=h62c20be_1
 tk=8.6.8=hbc83047_0
-torch=1.4.0
+#torch=1.4.0
 tqdm=4.46.0
 transformers=2.1.1
 ujson=1.35
@@ -42,3 +42,6 @@ urllib3=1.25.9
 wheel=0.34.2=py36_0
 xz=5.2.5=h7b6447c_0
 zlib=1.2.11=h7b6447c_3
+pytorch
+torchvision
+cudatoolkit=10.2

@@ -3,6 +3,7 @@ FROM continuumio/anaconda3:latest
 ARG DEBIAN_FRONTEND=noninteractive
 
 RUN conda config --add channels conda-forge \
+ && conda config --add channels pytorch \
  && conda update conda
 
 COPY conda_environment.txt /tmp/

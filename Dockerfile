@@ -1,15 +1,6 @@
-FROM ubuntu:latest
-
-RUN apt-get -y install wget \
- && get https://repo.anaconda.com/archive/Anaconda3-5.3.1-Linux-x86_64.sh
-
-RUN chmod 770 ./Anaconda3-5.3.1-Linux-x86_64.sh
+FROM continuumio/anaconda3:latest
 
 ARG DEBIAN_FRONTEND=noninteractive
-
-RUN yes yes | ./Anaconda3-5.3.1-Linux-x86_64.sh
-
-ENV PATH /yes/bin/:$PATH
 
 RUN conda config --add channels conda-forge \
  && conda update conda

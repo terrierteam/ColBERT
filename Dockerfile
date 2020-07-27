@@ -14,6 +14,6 @@ RUN conda update conda
 
 COPY conda_environment.txt /tmp/
 
-RUN conda env create -f /tmp/conda_environment.txt
+RUN conda env create --name pythonColbert -f /tmp/conda_environment.txt
 
 SHELL ["conda", "run", "-n", "myenv", "/bin/bash", "-c"]

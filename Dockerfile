@@ -1,4 +1,5 @@
 FROM continuumio/anaconda3:latest
+#FROM pytorch/conda-cuda
 
 ARG DEBIAN_FRONTEND=noninteractive
 

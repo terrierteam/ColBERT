@@ -1,0 +1,44 @@
+---
+apiVersion: "batch/v1"
+kind: "Job"
+metadata:
+  name: "job-colbert-train"
+  namespace: "richardmproject"
+spec:
+  nodeSelector:
+    node-role.ida/gputitan: 'true'
+  parallelism: 1
+  completions: 1
+  template:
+    metadata:
+      labels:
+        jobconfig: "job-colber-train"
+        app: "colbert"
+    spec:
+      containers:
+      - name: "colbert"
+        image: "docker-registry.default.svc:5000/richardmproject/is-colbert:latest"
+        resources:
+          requests:
+            cpu: "1000m"
+            memory: "16Gi"
+            nvidia.com/gpu: '1'
+          limits:
+            cpu: "16000m"
+            memory: "64Gi"
+            nvidia.com/gpu: '1'
+        volumeMounts:
+        - mountPath: "/nfs/"
+          name: "nfs-access"
+        imagePullPolicy: "Always"
+        workingDir: /nfs/colbert/ColBERT
+        command:
+        - "/bin/bash"
+        args:
+        - "trainColbert.sh"
+      volumes:
+      - name: "nfs-access"
+        persistentVolumeClaim:
+          claimName: "richardmvol1claim"
+      restartPolicy: "OnFailure"
+      serviceAccount: "containerroot"

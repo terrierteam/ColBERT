@@ -56,7 +56,13 @@ RUN apt-get update \
 
 ENV LANG=C.UTF-8
 
-RUN apt-get install unrar-free
+RUN  echo "deb http://archive.ubuntu.com/ubuntu bionic multiverse" >>  /etc/apt/sources.list \
+ && echo "deb http://archive.ubuntu.com/ubuntu bionic-security multiverse" >>  /etc/apt/sources.list \
+ && echo "deb http://archive.ubuntu.com/ubuntu bionic-updates multiverse" >>  /etc/apt/sources.list \
+ && echo "deb http://archive.ubuntu.com/ubuntu bionic universe" >>  /etc/apt/sources.list \
+ && echo "deb http://archive.ubuntu.com/ubuntu bionic-security universe" >>  /etc/apt/sources.list \
+ && echo "deb http://archive.ubuntu.com/ubuntu bionic-updates universe" >>  /etc/apt/sources.list \
+ && apt update
 
 RUN APT_INSTALL="apt-get install -y --no-install-recommends" \
  && PIP_INSTALL="python -m pip --no-cache-dir install --upgrade" \

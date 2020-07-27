@@ -14,7 +14,8 @@ RUN yes yes | ./Anaconda3-5.3.1-Linux-x86_64.sh
 ENV PATH /yes/bin/:$PATH
 
 RUN conda config --add channels conda-forge \
- && conda config --add channels pytorch
+ && conda config --add channels pytorch \
+ && conda install python=3.6.0
 # && conda update conda \
 # && conda update -n base -c defaults conda
 

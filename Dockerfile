@@ -1,6 +1,7 @@
 FROM ubuntu:latest
 
-RUN wget https://repo.anaconda.com/archive/Anaconda3-5.3.1-Linux-x86_64.sh
+RUN apt-get -y install wget \
+ && get https://repo.anaconda.com/archive/Anaconda3-5.3.1-Linux-x86_64.sh
 
 RUN chmod 770 ./Anaconda3-5.3.1-Linux-x86_64.sh
 

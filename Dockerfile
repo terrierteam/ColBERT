@@ -65,8 +65,6 @@ RUN  echo "deb http://archive.ubuntu.com/ubuntu bionic multiverse" >>  /etc/apt/
  && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3B4FE6ACC0B21F32 \
  && apt update
 
-RUN conda run -n pythonColbert /bin/bash -c "pip install -y torch==1.4.0"
-
 #COPY conda_environment.txt /tmp/
 
 #RUN conda env create --name pythonColbert -f /tmp/conda_environment.txt

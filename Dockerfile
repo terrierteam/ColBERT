@@ -1,4 +1,4 @@
-FROM ufoym/deepo:torch-cu100
+FROM ufoym/deepo:pytorch-py36-cu100
 #FROM pytorch/conda-cuda
 
 ARG DEBIAN_FRONTEND=noninteractive

@@ -5,16 +5,15 @@ import torch.nn as nn
 from transformers import BertPreTrainedModel, BertModel, BertTokenizer
 from src.parameters import DEVICE
 
-
 class ColBERT(BertPreTrainedModel):
-    def __init__(self, config, query_maxlen, doc_maxlen, dim=128, similarity_metric='cosine'):
+    def __init__(self, config, query_maxlen, doc_maxlen, dim=128, similarity_metric='cosine', tokenizer='bert-base-uncased'):
         super(ColBERT, self).__init__(config)
-
+        
         self.query_maxlen = query_maxlen
         self.doc_maxlen = doc_maxlen
         self.similarity_metric = similarity_metric
 
-        self.tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
+        self.tokenizer = BertTokenizer.from_pretrained(tokenizer_source)
         self.skiplist = {w: True for w in string.punctuation}
 
         self.bert = BertModel(config)

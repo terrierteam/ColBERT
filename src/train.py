@@ -20,6 +20,9 @@ def main():
     parser.add_argument('--bsize', dest='bsize', default=32, type=int)
     parser.add_argument('--accum', dest='accumsteps', default=2, type=int)
 
+    parser.add_argument('--bert', dest='bert', default='bert-base-uncased')
+    parser.add_argument('--bert_tokenizer', dest='bert_tokenizer', default='bert-base-uncased')
+
     parser.add_argument('--data_dir', dest='data_dir', default=DEFAULT_DATA_DIR)
     parser.add_argument('--triples', dest='triples', default='triples.train.small.tsv')
     parser.add_argument('--output_dir', dest='output_dir', default='outputs.train/')
@@ -43,7 +46,8 @@ def main():
     assert args.query_maxlen <= 512
     assert args.doc_maxlen <= 512
 
-    args.triples = os.path.join(args.data_dir, args.triples)
+    if not os.path.exists(args.triples) and os.path.exists(os.path.join(args.data_dir, args.triples)):
+        args.triples = os.path.join(args.data_dir, args.triples)
 
     train(args)
 

@@ -12,17 +12,34 @@ from src.model import ColBERT
 from src.utils import print_message, save_checkpoint
 
 
+def autoopen(filename, mode='rb', **kwargs):
+    if filename.endswith(".gz"):
+        print(mode)
+        import gzip
+        return gzip.open(filename, mode, **kwargs)
+    elif filename.endswith(".bz2"):
+        import bz2
+        return bz2.open(filename, mode, **kwargs)
+    return open(filename, mode)
+
+
+
 class TrainReader:
     def __init__(self, data_file):
         print_message("#> Training with the triples in", data_file, "...\n\n")
-        self.reader = open(data_file, mode='r', encoding="utf-8")
+        self.reader = autoopen(data_file, mode='rt', encoding="utf-8")
 
     def get_minibatch(self, bsize):
-        return [self.reader.readline().split('\t') for _ in range(bsize)]
+        arr = []
+        for _ in  range(bsize):
+           parts = self.reader.readline().split('\t')
+           if len(parts) == 3:
+              arr.append(parts)
+        return arr
 
 
 def manage_checkpoints(colbert, optimizer, batch_idx):
-    if batch_idx % 2000 == 0:
+    if batch_idx % 100 == 0:
         save_checkpoint("colbert.dnn", 0, batch_idx, colbert, optimizer)
 
     if batch_idx in SAVED_CHECKPOINTS:

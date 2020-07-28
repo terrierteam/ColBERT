@@ -29,6 +29,8 @@ class TrainReader:
         print_message("#> Training with the triples in", data_file, "...\n\n")
         self.reader = autoopen(data_file, mode='rt', encoding="utf-8")
 
+    # def get_minibatch(self, bsize):
+    #     return [self.reader.readline().split('\t') for _ in range(bsize)]
     def get_minibatch(self, bsize):
         arr = []
         for _ in  range(bsize):
@@ -47,11 +49,12 @@ def manage_checkpoints(colbert, optimizer, batch_idx):
 
 
 def train(args):
-    colbert = ColBERT.from_pretrained('bert-base-uncased',
+    colbert = ColBERT.from_pretrained(args.bert,
                                       query_maxlen=args.query_maxlen,
                                       doc_maxlen=args.doc_maxlen,
                                       dim=args.dim,
-                                      similarity_metric=args.similarity)
+                                      similarity_metric=args.similarity, 
+                                      tokenizer=args.bert_tokenizer)
     colbert = colbert.to(DEVICE)
     colbert.train()
 
@@ -71,6 +74,8 @@ def train(args):
         for B_idx in range(args.accumsteps):
             size = args.bsize // args.accumsteps
             B = Batch[B_idx * size: (B_idx+1) * size]
+            if len(B) == 0:
+                continue
             Q, D1, D2 = zip(*B)
 
             colbert_out = colbert(Q + Q, D1 + D2)

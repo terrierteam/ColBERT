@@ -2,7 +2,8 @@ import string
 import torch
 import torch.nn as nn
 
-from transformers import BertPreTrainedModel, BertModel, BertTokenizer
+from transformers import BertPreTrainedModel, BertModel, BertTokenizer, AutoTokenizer, AutoModel
+
 from src.parameters import DEVICE
 
 class ColBERT(BertPreTrainedModel):
@@ -13,10 +14,9 @@ class ColBERT(BertPreTrainedModel):
         self.doc_maxlen = doc_maxlen
         self.similarity_metric = similarity_metric
 
-        self.tokenizer = BertTokenizer.from_pretrained(tokenizer_source)
+        self.tokenizer = BertTokenizer.from_pretrained(tokenizer)
         self.skiplist = {w: True for w in string.punctuation}
-
-        self.bert = BertModel(config)
+        self.bert = BertModel(config) # AutoModel.from_pretrained(tokenizer)
         self.linear = nn.Linear(config.hidden_size, dim, bias=False)
 
         self.init_weights()
